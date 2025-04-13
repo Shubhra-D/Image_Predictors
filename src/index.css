@@ -1,0 +1,14 @@
+
+.pageWrapper {
+    animation: fadeSlideIn 1s ease-in-out forwards;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  
+  @keyframes fadeSlideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
