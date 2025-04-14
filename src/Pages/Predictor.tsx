@@ -2,10 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 import Whiteboard from "./WhiteBoard";
 
+
 const Predictor = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [predictionResult, setPredictionResult] = useState("");
-
+ const API_TOKEN = import.meta.env.VITE_HUGGING_FACE_TOKEN
   const predictImage = async (base64Image: string) => {
     setPredictionResult("Predicting the Results....");
 
@@ -23,7 +24,7 @@ const Predictor = () => {
         { inputs: base64Image },
         {
           headers: {
-            Authorization: "Bearer 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", //my hugging face api key
+            Authorization: `Bearer ${API_TOKEN}`, //my hugging face api key
             "Content-Type": "application/json",
           },
         }
