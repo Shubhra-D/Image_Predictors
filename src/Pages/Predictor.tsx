@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import Whiteboard from "./WhiteBoard";
 
+
 const Predictor = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [predictionResult, setPredictionResult] = useState("");
@@ -37,6 +38,7 @@ const Predictor = () => {
         {
           headers: {
             Authorization: `Bearer ${HUGGING_API}`,
+
             "Content-Type": "application/json",
           },
         }
