@@ -1,15 +1,19 @@
-// Whiteboard.tsx
 import { useRef, useState } from "react";
 import { Stage, Layer, Line } from "react-konva";
 
 type Point = number[];
 type LineType = { tool: string; points: Point[] };
 
-const Whiteboard = () => {
+interface WhiteboardProps {
+  onPredictImage: (base64Image: string) => void;
+}
+
+const Whiteboard = ({ onPredictImage }: WhiteboardProps) => {
   const [lines, setLines] = useState<LineType[]>([]);
   const [history, setHistory] = useState<LineType[][]>([]);
   const [redoStack, setRedoStack] = useState<LineType[][]>([]);
   const isDrawing = useRef(false);
+  const stageRef = useRef<any>(null);
 
   const handleMouseDown = (e: any) => {
     isDrawing.current = true;
@@ -54,46 +58,55 @@ const Whiteboard = () => {
     setRedoStack(redoStack.slice(0, -1));
   };
 
+  const clearCanvas = () => {
+    setLines([]);
+    setHistory([]);
+    setRedoStack([]);
+  };
+
+  const handlePredict = async () => {
+    if (!stageRef.current) return;
+    const uri = stageRef.current.toDataURL();
+    onPredictImage(uri); // Call parent component's prediction function
+  };
+
   return (
-    <div className="container my-5">
-      <h2 className="text-center mb-4"> Draw Something!</h2>
+    <div className="shadow p-3 mb-4 bg-white rounded">
+      <Stage
+        ref={stageRef}
+        width={600}
+        height={400}
+        onMouseDown={handleMouseDown}
+        onMousemove={handleMouseMove}
+        onMouseup={handleMouseUp}
+        style={{
+          border: "2px solid #333",
+          borderRadius: "10px",
+          background: "#fff",
+          display: "block",
+          margin: "auto",
+        }}
+      >
+        <Layer>
+          {lines.map((line, i) => (
+            <Line
+              key={i}
+              points={line.points.flat()}
+              stroke="#000"
+              strokeWidth={3}
+              tension={0.5}
+              lineCap="round"
+              globalCompositeOperation="source-over"
+            />
+          ))}
+        </Layer>
+      </Stage>
 
-      <div className="shadow p-3 mb-4 bg-white rounded">
-        <div className="canvas-wrapper mb-3" style={{ overflowX: "auto" }}>
-          <Stage
-            width={600}
-            height={400}
-            onMouseDown={handleMouseDown}
-            onMousemove={handleMouseMove}
-            onMouseup={handleMouseUp}
-            style={{
-              border: "2px solid #333",
-              borderRadius: "10px",
-              background: "#fff",
-              display: "block",
-              margin: "auto",
-            }}
-          >
-            <Layer>
-              {lines.map((line, i) => (
-                <Line
-                  key={i}
-                  points={line.points.flat()}
-                  stroke="#000"
-                  strokeWidth={3}
-                  tension={0.5}
-                  lineCap="round"
-                  globalCompositeOperation="source-over"
-                />
-              ))}
-            </Layer>
-          </Stage>
-        </div>
-
-        <div className="d-flex justify-content-center gap-3">
-          <button className="btn btn-outline-secondary" onClick={undo}>Undo</button>
-          <button className="btn btn-outline-danger" onClick={redo}>Redo</button>
-        </div>
+      <div className="d-flex justify-content-center gap-3 mt-3">
+        <button className="btn btn-secondary" onClick={undo}>Undo</button>
+        <button className="btn btn-danger" onClick={redo}>Redo</button>
+        <button className="btn btn-warning" onClick={clearCanvas}>Clear</button>
+        <button className="btn btn-success" onClick={handlePredict}>Predict Drawing</button>
       </div>
     </div>
   );

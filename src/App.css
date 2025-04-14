@@ -11,4 +11,13 @@
       transform: translateY(0);
     }
   }
+
+  .carousel-zoom img {
+    transition: transform 2s ease;
+  }
+  
+  .carousel-zoom .carousel-item.active img {
+    transform: scale(1.05); /* Slight zoom */
+  }
+  
   
