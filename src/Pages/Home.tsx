@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { auth, provider } from "../firebase";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, User } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import ImageSlider from "./ImageSlider";
 
 const Home = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const handleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       setUser(result.user);
+      console.log(result.user);
     } catch (err) {
       console.error("Login failed:", err);
     }
@@ -21,7 +22,11 @@ const Home = () => {
       {/* Login Card */}
       <div
         className="card mx-auto"
-        style={{ maxWidth: "400px", margin: "10px",backgroundColor:"whitesmoke" }}
+        style={{
+          maxWidth: "400px",
+          margin: "10px",
+          backgroundColor: "whitesmoke",
+        }}
       >
         <div className="card-body">
           {!user ? (
@@ -48,21 +53,27 @@ const Home = () => {
               }}
             >
               <p>Welcome, {user.displayName}</p>
-              <img
-                src={user.photoURL}
-                alt="user"
-                width={50}
-                height={50}
-                style={{ borderRadius: "50%", marginBottom: "10px" }}
-              />
+              <p>{user.email}</p>
+              {user && user.photoURL && (
+                <img
+                  src={user.photoURL}
+                  alt="user"
+                  width={50}
+                  height={50}
+                  referrerPolicy="no-referrer"
+                  style={{ borderRadius: "50%", marginBottom: "10px" }}
+                />
+              )}
               <br />
-              <h6 style={{color:"gray",padding:"10px"}}>Wanna Explore your Image being Predicted</h6>
+              <h6 style={{ color: "gray", padding: "10px" }}>
+                Wanna Explore your Image being Predicted
+              </h6>
 
               <button
                 style={{
                   borderRadius: "10px",
                   border: "none",
-                  padding:"8px",
+                  padding: "8px",
                   fontWeight: "bold",
                   backgroundColor: "black",
                   color: "whitesmoke",
@@ -70,7 +81,11 @@ const Home = () => {
               >
                 <Link
                   to={"/predictor"}
-                  style={{ textDecoration: "none", marginTop: "10px",color:"whitesmoke" }}
+                  style={{
+                    textDecoration: "none",
+                    marginTop: "10px",
+                    color: "whitesmoke",
+                  }}
                 >
                   Predictor Page
                 </Link>
