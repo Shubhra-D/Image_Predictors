@@ -2,12 +2,12 @@ import axios from "axios";
 import { useState } from "react";
 import Whiteboard from "./WhiteBoard";
 
-
 const Predictor = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [predictionResult, setPredictionResult] = useState("");
 
-  const HUGGING_API=import.meta.env.VITE_HUGGING_FACE_TOKEN;
+
+  const HUGGING_API = import.meta.env.VITE_HUGGING_FACE_TOKEN;
   const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/";
@@ -38,7 +38,6 @@ const Predictor = () => {
         {
           headers: {
             Authorization: `Bearer ${HUGGING_API}`,
-
             "Content-Type": "application/json",
           },
         }
