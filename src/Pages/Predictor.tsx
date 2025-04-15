@@ -6,8 +6,8 @@ const Predictor = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [predictionResult, setPredictionResult] = useState("");
 
-
   const HUGGING_API = import.meta.env.VITE_HUGGING_FACE_TOKEN;
+
   const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/";
