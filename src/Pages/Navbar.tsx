@@ -1,30 +1,50 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged,signOut,User } from "firebase/auth";
-import { auth } from "../firebase";
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  User,
+} from "firebase/auth";
+import { auth, provider } from "../firebase";
 const Navbar = () => {
-  const [user,setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-  
-useEffect(()=>{
-    const unsubscribe =  onAuthStateChanged(auth,(currentUser)=>{
-        setUser(currentUser)
-    })
-    return ()=>unsubscribe();
-},[]);
- 
-const handleLogout = async () => {
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+  const handleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      setUser(result.user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
 
-    return (
-    <div style={{ display: "flex",padding: "0.5rem 1rem",backgroundColor:"gray", justifyContent: "space-between",alignItems:"center" }}>
+  return (
+    <div
+      style={{
+        display: "flex",
+        padding: "0.5rem 1rem",
+        backgroundColor: "gray",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
       <div>
         <img
           src={Logo}
@@ -33,18 +53,35 @@ const handleLogout = async () => {
         />
       </div>
       <div>
-        <Link to="/" style={{ textDecoration: "none",fontSize:"1.2rem",fontWeight:"bold",color:"black" }}>
+        <Link
+          to="/"
+          style={{
+            textDecoration: "none",
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
           Home
         </Link>
       </div>
       <div>
-      {user ? (
+        {user ? (
+          <div style={{display:"flex",gap:"2rem"}}>
+            <Link
+              to={"/predictor"}
+              style={{marginRight:"10px" ,textDecoration: "none",fontWeight:"bold",fontSize:"1.2rem", color: "whitesmoke" }}
+            >
+              Predictor Page
+            </Link>
             <button
               onClick={handleLogout}
               style={{
                 padding: "6px 12px",
-                backgroundColor: "#222",
-                color: "white",
+                backgroundColor: "whitesmoke",
+                color: "black",
+                fontSize:"1.1rem",
+                fontWeight:"bold",
                 border: "none",
                 borderRadius: "5px",
                 cursor: "pointer",
@@ -52,21 +89,22 @@ const handleLogout = async () => {
             >
               Logout
             </button>
-          
+          </div>
         ) : (
-          <Link
-            to="/login"
+          <button
             style={{
               textDecoration: "none",
               fontSize: "1.1rem",
-              color: "white",
-              backgroundColor: "#222",
+              fontWeight: "bold",
+              color: "#222",
+              backgroundColor: "whitesmoke",
               padding: "6px 12px",
               borderRadius: "5px",
             }}
+            onClick={handleLogin}
           >
-            Login
-          </Link>
+            Sign-in
+          </button>
         )}
       </div>
     </div>
