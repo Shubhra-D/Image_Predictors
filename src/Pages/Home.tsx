@@ -2,7 +2,7 @@ import { useState } from "react";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ImageSlider from "./ImageSlider";
 
 const Home = () => {
