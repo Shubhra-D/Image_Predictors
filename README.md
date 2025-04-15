@@ -1,54 +1,73 @@
-# React + TypeScript + Vite
+# 🧠 Image Prediction Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a smart web app that allows users to **upload an image** or **draw using a whiteboard**, and get an **AI-generated caption** instantly. Built with modern tech, it combines creativity with the power of AI image recognition.
 
-Currently, two official plugins are available:
+## Home Page
+![Home Page ](./src/assets/homepage.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Image Upload
+![Screenshot of Upload Section](./src/assets/upload.png)
+## Image Text
+![Screenshot of Whiteboard](./src/assets/uploadResult.png)
+## Drawing Board
+![Screenshot of Prediction](./src//assets/drawing.png)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Features
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 📷 **Upload or Draw**: Users can upload any image or draw freehand on a digital canvas.
+- 🤖 **AI-Based Prediction**: Uses Hugging Face's BLIP model to generate intelligent captions.
+- ☁️ **Cloudinary Integration**: Images are uploaded to Cloudinary for reliable hosting.
+- 🔐 **Firebase Authentication**: Secure login and signup support.
+- 🖼️ **Whiteboard with Konva.js**: Clean canvas for drawing images.
+- 💡 **User-Friendly Interface**: Polished UI with emojis and interactive feedback.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Tech Stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **React + TypeScript**
+- **Konva.js** – for drawing whiteboard
+- **Cloudinary** – image upload & hosting
+- **Hugging Face Inference API** – for image captioning
+- **Firebase** – authentication
+- **Bootstrap** – responsive styling
+- **Axios** – API requests
+
+---
+
+## 🧪 Challenges Faced
+
+- Handling **CORS issues** with Cloudinary and Hugging Face APIs.
+- Dealing with **403 and 503 errors** when the inference model was cold or blocked.
+- Converting **drawings to base64** and uploading them as valid images.
+- Ensuring proper formatting of image URLs for AI predictions.
+
+---
+
+## 📚 What I Learned
+
+- How to integrate **AI models** (BLIP) into frontend projects.
+- Efficient use of **Konva.js** for dynamic canvas drawing.
+- Secure image handling via **Cloudinary** uploads.
+- Working with **Firebase Authentication** and React context.
+- Best practices for handling **asynchronous image uploads and predictions**.
+
+---
+
+## 💡 Future Improvements
+
+- ✅ Add **download** functionality for drawings.
+- ✅ Improve **error handling** with custom messages and fallback UI.
+- ✅ Let users choose different **AI models** (like object detection or style transfer).
+
+---
+
+## 🔗 Live Demo
+
+Check out the deployed version here:  
+👉 [Live on GitHub Pages](https://shubhra-d.github.io/Image_Predictors/)
+
+---
+

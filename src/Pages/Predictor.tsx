@@ -10,7 +10,7 @@ const Predictor = () => {
 
   const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-  const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/";
+
 
   // Upload to Cloudinary
   const uploadToCloudinary = async (base64Image: string) => {
@@ -19,7 +19,7 @@ const Predictor = () => {
     formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
     const response = await axios.post(
-      `${CORS_PROXY}https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
       formData
     );
     return response.data.secure_url;
